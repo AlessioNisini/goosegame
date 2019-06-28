@@ -16,9 +16,8 @@ object Game {
   val players: scala.collection.mutable.Map[String, Player] = scala.collection.mutable.Map()
 
   def addPlayers(names: String*): Unit = {
-    for(name <- names)
-      if(players.get(name).isEmpty)
-        updatePlayers(Player(name, players.size, START_CELL))
+    for(name <- names if players.get(name).isEmpty)
+      updatePlayers(Player(name, players.size, START_CELL))
   }
 
   def startGame(): Player = loop(firstPlayer())
