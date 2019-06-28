@@ -23,7 +23,7 @@ object Game {
   def startGame(): Player = loop(firstPlayer())
 
   def loop(currentPlayer: Player): Player = {
-
+    println()
     if(currentPlayer.isInJail) {
       println(s"${currentPlayer.name} is in jail")
       loop(nextPlayer(currentPlayer))
@@ -32,12 +32,10 @@ object Game {
       if(playerAfterHisRound.hasWin) playerAfterHisRound
       else loop(nextPlayer(playerAfterHisRound))
     }
-
   }
 
   def playOneRound(player: Player) : Player = {
     val playerAfterHisRound = player.makePlayerRound()
-    println()
     updatePlayers(playerAfterHisRound)
     playerAfterHisRound
   }
@@ -59,12 +57,13 @@ object Game {
   def updateJail(player: Player): Unit = {
     anyoneInJail().foreach(freeThePlayer)
     placeInJail(player)
+    println()
   }
 
   def anyoneInJail(): Option[Player] = players.find(!_._2.canMove).map(_._2)
 
   def freeThePlayer(player: Player): Unit = {
-    println(s"now ${player.name} is free")
+    print(s"now ${player.name} is free")
     updatePlayers(Player(player.name, player.inGameOrder, player.currentCell))
   }
 
