@@ -2,7 +2,7 @@ package goose
 
 import scala.util.Random
 
-case class Player(name: String, inGameOrder: Int, currentCell: Int) {
+case class Player(name: String, inGameOrder: Int, currentCell: Int, canMove: Boolean = true) {
 
   import Game._
 
@@ -19,15 +19,24 @@ case class Player(name: String, inGameOrder: Int, currentCell: Int) {
       case PenaltyRound => moveBackward
     }
 
-    val cellTypeAfterMove = cellType(playerAfterMove)
+    print(s"to ${playerAfterMove.currentCell} ")
 
-    println(s"to ${playerAfterMove.currentCell} of type $cellTypeAfterMove")
-
-    cellTypeAfterMove match {
-      case Goose => playerAfterMove.makePlayerRound()
-      case Pit => playerAfterMove.makePlayerRound(PenaltyRound)
-      case Skull => playerAfterMove.goToStart
-      case _ => playerAfterMove
+    playerAfterMove.currentCell match {
+      case SKULL_CELL =>
+        println("of type SKULL")
+        playerAfterMove.goToStart
+      case JAIL_CELL =>
+        print("of type JAIL ")
+        playerAfterMove.goToJail
+      case cell if GOOSE_CELLS.contains(cell) =>
+        println("of type GOOSE")
+        playerAfterMove.makePlayerRound()
+      case cell if PIT_CELLS.contains(cell) =>
+        println("of type PIT")
+        playerAfterMove.makePlayerRound(PenaltyRound)
+      case _ =>
+        println()
+        playerAfterMove
     }
 
   }
@@ -62,6 +71,13 @@ case class Player(name: String, inGameOrder: Int, currentCell: Int) {
 
   def goToStart: Player = Player(name, inGameOrder, START_CELL)
 
+  def goToJail: Player = {
+    Game.updateJail(this)
+    Player(name, inGameOrder, currentCell, canMove = false)
+  }
+
   def hasWin: Boolean = this.currentCell == END_CELL
+
+  def isInJail: Boolean = !this.canMove
 
 }
