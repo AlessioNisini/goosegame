@@ -15,6 +15,8 @@ object Game {
 
   val players: scala.collection.mutable.Map[String, Player] = scala.collection.mutable.Map()
 
+  def resetPlayers(): Unit = players.clear()
+
   def addPlayers(names: String*): Unit = {
     for(name <- names if players.get(name).isEmpty)
       updatePlayers(Player(name, players.size, START_CELL))
@@ -56,7 +58,7 @@ object Game {
 
   def updateJail(player: Player): Unit = {
     anyoneInJail().foreach(freeThePlayer)
-    placeInJail(player)
+    putInJail(player)
     println()
   }
 
@@ -67,7 +69,7 @@ object Game {
     updatePlayers(Player(player.name, player.inGameOrder, player.currentCell))
   }
 
-  def placeInJail(player: Player): Unit =
+  def putInJail(player: Player): Unit =
     updatePlayers(Player(player.name, player.inGameOrder, player.currentCell, canMove = false))
 
   def updatePlayers(player: Player): Unit = players += (player.name -> player)

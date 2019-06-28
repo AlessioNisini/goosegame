@@ -8,7 +8,7 @@ case class Player(name: String, inGameOrder: Int, currentCell: Int, canMove: Boo
 
   private val random = Random
   private def singleRoll : Int = random.nextInt(6) + 1
-  private def doubleRoll : Int = singleRoll + singleRoll
+   def doubleRoll : Int = singleRoll + singleRoll
 
   def makePlayerRound(round: Round = StandardRound): Player = {
 
