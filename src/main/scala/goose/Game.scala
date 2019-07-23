@@ -64,14 +64,14 @@ object Game {
 
   def anyoneInJail(): Option[Player] = players.find(!_._2.canMove).map(_._2)
 
-  def freeThePlayer(player: Player): Unit = {
+  private def freeThePlayer(player: Player): Unit = {
     print(s"now ${player.name} is free")
     updatePlayers(Player(player.name, player.inGameOrder, player.currentCell))
   }
 
-  def putInJail(player: Player): Unit =
+  private def putInJail(player: Player): Unit =
     updatePlayers(Player(player.name, player.inGameOrder, player.currentCell, canMove = false))
 
-  def updatePlayers(player: Player): Unit = players += (player.name -> player)
+  private def updatePlayers(player: Player): Unit = players += (player.name -> player)
 
 }

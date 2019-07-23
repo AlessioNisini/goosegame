@@ -4,19 +4,19 @@ import org.scalatest.{Matchers, WordSpecLike}
 
 class GameSpec extends WordSpecLike with Matchers {
 
-  "Add player" should {
+  "add player" should {
     "add player correctly" in {
       Game.addPlayers("Alex", "Elena", "Pietro")
       Game.players.size shouldBe 3
-      Game.players("Alex") shouldBe Player("Alex", 0, Game.START_CELL, true)
-      Game.players("Elena") shouldBe Player("Elena", 1, Game.START_CELL, true)
-      Game.players("Pietro") shouldBe Player("Pietro", 2, Game.START_CELL, true)
+      Game.players("Alex") shouldBe Player("Alex", 0, Game.START_CELL)
+      Game.players("Elena") shouldBe Player("Elena", 1, Game.START_CELL)
+      Game.players("Pietro") shouldBe Player("Pietro", 2, Game.START_CELL)
     }
     "do not add two player with the same name" in {
       Game.addPlayers("Alex", "Alex", "Pietro")
       Game.players.size shouldBe 2
-      Game.players("Alex") shouldBe Player("Alex", 0, Game.START_CELL, true)
-      Game.players("Pietro") shouldBe Player("Pietro", 1, Game.START_CELL, true)
+      Game.players("Alex") shouldBe Player("Alex", 0, Game.START_CELL)
+      Game.players("Pietro") shouldBe Player("Pietro", 1, Game.START_CELL)
     }
   }
 
@@ -45,7 +45,7 @@ class GameSpec extends WordSpecLike with Matchers {
       Game.addPlayers("Alex", "Elena", "Pietro")
       Game.anyoneInJail() shouldBe None
     }
-    "return Some(player) if the jail is not empty" in {
+    "return Some(Player) if the jail is not empty" in {
       Game.addPlayers("Alex", "Elena", "Pietro")
       Game.updateJail(Game.players("Elena"))
       Game.anyoneInJail() shouldBe Some(Game.players("Elena"))
@@ -56,14 +56,14 @@ class GameSpec extends WordSpecLike with Matchers {
     "if the jail is empty, put a player in jail" in {
       Game.addPlayers("Alex", "Elena", "Pietro")
       Game.updateJail(Game.players("Elena"))
-      Game.players("Elena") shouldBe Player("Elena", 1, Game.START_CELL, false)
+      Game.players("Elena") shouldBe Player("Elena", 1, Game.START_CELL, canMove = false)
     }
     "if there is someone in jail, put a player in jail and release the other" in {
       Game.addPlayers("Alex", "Elena", "Pietro")
       Game.updateJail(Game.players("Elena"))
       Game.updateJail(Game.players("Pietro"))
-      Game.players("Elena") shouldBe Player("Elena", 1, Game.START_CELL, true)
-      Game.players("Pietro") shouldBe Player("Pietro", 2, Game.START_CELL, false)
+      Game.players("Elena") shouldBe Player("Elena", 1, Game.START_CELL)
+      Game.players("Pietro") shouldBe Player("Pietro", 2, Game.START_CELL, canMove = false)
     }
   }
 
@@ -72,6 +72,13 @@ class GameSpec extends WordSpecLike with Matchers {
       Game.addPlayers("Alex", "Elena", "Pietro")
       Game.playOneRound(Game.players("Alex"))
       Game.players("Alex").currentCell shouldBe > (Game.START_CELL)
+    }
+  }
+
+  "start game" should {
+    "return a winner" in {
+      Game.addPlayers("Alex", "Elena", "Pietro")
+      Game.startGame() shouldBe a [Player]
     }
   }
 
