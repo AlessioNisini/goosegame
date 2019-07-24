@@ -6,6 +6,8 @@ object Game {
   case object PenaltyRound extends Round
   case object StandardRound extends Round
 
+  val REGEX = "^[a-zA-Z0-9]+$"
+
   val START_CELL = 0
   val END_CELL = 63
   val SKULL_CELL = 58
@@ -17,9 +19,17 @@ object Game {
 
   def resetPlayers(): Unit = players.clear()
 
-  def addPlayers(names: String*): Unit = {
-    for(name <- names if players.get(name).isEmpty)
+  def addPlayer(name: String): String = name match {
+    case _ if !name.matches(REGEX) => "Error: Invalid name"
+    case _ if players.get(name).isDefined => s"Error: $name already exist"
+    case _ =>
       updatePlayers(Player(name, players.size, START_CELL))
+      s"OK, $name added"
+  }
+
+  def viewPlayers(): String = {
+    if (players.isEmpty) "No player added yet"
+    else players.values.map(_.name).mkString(", ")
   }
 
   def startGame(): Player = loop(firstPlayer())

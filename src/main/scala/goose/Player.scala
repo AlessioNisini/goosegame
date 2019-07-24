@@ -74,7 +74,7 @@ case class Player(name: String, inGameOrder: Int, currentCell: Int, canMove: Boo
   def goToStart: Player = Player(name, inGameOrder, START_CELL)
 
   def goToJail: Player = {
-    Game.updateJail(this)
+    updateJail(this)
     Player(name, inGameOrder, currentCell, canMove = false)
   }
 
