@@ -8,9 +8,9 @@ object Main extends App {
 
   println("THE GOOSE GAME!!!\n")
 
-  userInterface
+  userInterface()
 
-  def userInterface: Unit = {
+  def userInterface(): Unit = {
 
     println("a: Add a player")
     println("v: View the players")
@@ -22,18 +22,18 @@ object Main extends App {
         println("Enter the player's name")
         print("=> ")
         println(addPlayer(readLine()))
-        userInterface
+        userInterface()
       case "v" =>
         println(s"${viewPlayers()}")
-        userInterface
+        userInterface()
       case "s" if players.size < 2 =>
         println("Error: Add at least two player")
-        userInterface
+        userInterface()
       case "s" =>
         println("\nThe winner is " + startGame().name)
       case _ =>
         println("Error: Invalid command")
-        userInterface
+        userInterface()
     }
 
   }

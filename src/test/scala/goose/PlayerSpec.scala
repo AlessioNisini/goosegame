@@ -1,6 +1,6 @@
 package goose
 
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.{Matchers, Outcome, WordSpecLike}
 import org.mockito.Mockito._
 
 class PlayerSpec extends WordSpecLike with Matchers with TestValues {
@@ -70,7 +70,7 @@ class PlayerSpec extends WordSpecLike with Matchers with TestValues {
     spyPlayer
   }
 
-  override def withFixture(test: NoArgTest) = {
+  override def withFixture(test: NoArgTest) : Outcome = {
     try {
       addPlayer(P1)
       super.withFixture(test)
