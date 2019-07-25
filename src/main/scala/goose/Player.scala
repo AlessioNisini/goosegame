@@ -44,31 +44,19 @@ case class Player(name: String, inGameOrder: Int, currentCell: Int, canMove: Boo
   }
 
   def moveForward: Player = {
-
     val roll = doubleRoll
-
     print(s"roll $roll ")
-
     val potentialPosition = currentCell + roll
-
     val newPosition =
-      if (potentialPosition > END_CELL)
-        END_CELL - (potentialPosition - END_CELL)
-      else
-        potentialPosition
-
+      if (potentialPosition > END_CELL) END_CELL - (potentialPosition - END_CELL)
+      else potentialPosition
     Player(name, inGameOrder, newPosition)
-
   }
 
   def moveBackward: Player = {
-
     val roll = singleRoll
-
     print(s"roll -$roll ")
-
     Player(name, inGameOrder, currentCell - roll)
-
   }
 
   def goToStart: Player = Player(name, inGameOrder, START_CELL)

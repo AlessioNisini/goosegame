@@ -52,6 +52,11 @@ class GameSpec extends WordSpecLike with Matchers with TestValues {
       playOneRound(players(P1))
       players(P1).currentCell shouldBe > (START_CELL)
     }
+    "do not change the player position if he's in jail" in {
+      updateJail(players(P1))
+      playOneRound(players(P1))
+      players(P1).currentCell shouldBe START_CELL
+    }
   }
 
   "start game" should {

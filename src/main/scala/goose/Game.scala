@@ -24,20 +24,20 @@ object Game {
   @tailrec
   def loop(currentPlayer: Player): Player = {
     println()
-    if(currentPlayer.isInJail) {
-      println(s"${currentPlayer.name} is in jail")
-      loop(nextPlayer(currentPlayer))
-    } else {
-      val playerAfterHisRound = playOneRound(currentPlayer)
-      if(playerAfterHisRound.hasWin) playerAfterHisRound
-      else loop(nextPlayer(playerAfterHisRound))
-    }
+    val playerAfterHisRound = playOneRound(currentPlayer)
+    if(playerAfterHisRound.hasWin) playerAfterHisRound
+    else loop(nextPlayer(playerAfterHisRound))
   }
 
   def playOneRound(player: Player) : Player = {
-    val playerAfterHisRound = player.makePlayerRound()
-    updatePlayers(playerAfterHisRound)
-    playerAfterHisRound
+    if(player.isInJail) {
+      println(s"${player.name} is in jail")
+      player
+    } else {
+      val playerAfterHisRound = player.makePlayerRound()
+      updatePlayers(playerAfterHisRound)
+      playerAfterHisRound
+    }
   }
 
   def firstPlayer(): Player = {
