@@ -12,7 +12,7 @@ case class Player(name: String, inGameOrder: Int, currentCell: Int, canMove: Boo
 
   def doubleRoll: Int = singleRoll + singleRoll
 
-  def makePlayerRound(round: Round = StandardRound): Player = {
+  def play(round: Round = StandardRound): Player = {
 
     print(s"${this.name} from ${this.currentCell} ")
 
@@ -32,10 +32,10 @@ case class Player(name: String, inGameOrder: Int, currentCell: Int, canMove: Boo
         playerAfterMove.goToJail
       case cell if GOOSE_CELLS.contains(cell) =>
         println("of type GOOSE")
-        playerAfterMove.makePlayerRound()
+        playerAfterMove.play()
       case cell if PIT_CELLS.contains(cell) =>
         println("of type PIT")
-        playerAfterMove.makePlayerRound(PenaltyRound)
+        playerAfterMove.play(PenaltyRound)
       case _ =>
         println()
         playerAfterMove

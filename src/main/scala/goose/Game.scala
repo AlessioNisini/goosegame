@@ -34,7 +34,7 @@ object Game {
       println(s"${player.name} is in jail")
       player
     } else {
-      val playerAfterHisRound = player.makePlayerRound()
+      val playerAfterHisRound = player.play()
       updatePlayers(playerAfterHisRound)
       playerAfterHisRound
     }

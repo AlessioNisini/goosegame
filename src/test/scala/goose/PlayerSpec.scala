@@ -35,31 +35,31 @@ class PlayerSpec extends WordSpecLike with Matchers with TestValues {
     }
   }
 
-  "makePlayerRound" should {
+  "play" should {
     "put a player on START_CELL if he goes to SKULL_CELL" in {
       val player = forceCellAfterMove(SKULL_CELL)
-      player.makePlayerRound().currentCell shouldBe START_CELL
+      player.play().currentCell shouldBe START_CELL
     }
     "put a player in jail if he goes to JAIL_CELL" in {
       val player = forceCellAfterMove(JAIL_CELL)
-      player.makePlayerRound() shouldBe Player(player.name, player.inGameOrder, JAIL_CELL, canMove = false)
+      player.play() shouldBe Player(player.name, player.inGameOrder, JAIL_CELL, canMove = false)
     }
     "move a player forward again if he goes to a GOOSE_CELLS" in {
       val player = forceCellAfterMove(GOOSE_CELLS(firstGooseCell))
-      player.makePlayerRound().currentCell should (be >= 7 and be <= 17)
+      player.play().currentCell should (be >= 7 and be <= 17)
     }
     "move a player backward again if he goes to a PIT_CELLS" in {
       val player = forceCellAfterMove(PIT_CELLS(lastPitCell))
-      player.makePlayerRound().currentCell should (be >= 48 and be <= 53)
+      player.play().currentCell should (be >= 48 and be <= 53)
     }
     "return a player to X position if he goes to a plain cell X" in {
       val player = forceCellAfterMove(aPlainCell)
-      player.makePlayerRound().currentCell shouldBe aPlainCell
+      player.play().currentCell shouldBe aPlainCell
     }
     "call moveBackward method if a player play a penalty round" in {
       val player = players(P1)
       val spyPlayer = spy(player)
-      spyPlayer.makePlayerRound(PenaltyRound)
+      spyPlayer.play(PenaltyRound)
       verify(spyPlayer, times(1)).moveBackward
     }
   }
