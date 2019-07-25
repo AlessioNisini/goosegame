@@ -1,5 +1,7 @@
 package goose
 
+import scala.annotation.tailrec
+
 object Game {
 
   trait Round
@@ -17,23 +19,9 @@ object Game {
 
   val players: scala.collection.mutable.Map[String, Player] = scala.collection.mutable.Map()
 
-  def resetPlayers(): Unit = players.clear()
-
-  def addPlayer(name: String): String = name match {
-    case _ if !name.matches(REGEX) => "Error: Invalid name"
-    case _ if players.get(name).isDefined => s"Error: $name already exist"
-    case _ =>
-      updatePlayers(Player(name, players.size, START_CELL))
-      s"OK, $name added"
-  }
-
-  def viewPlayers(): String = {
-    if (players.isEmpty) "No player added yet"
-    else players.values.map(_.name).mkString(", ")
-  }
-
   def startGame(): Player = loop(firstPlayer())
 
+  @tailrec
   def loop(currentPlayer: Player): Player = {
     println()
     if(currentPlayer.isInJail) {
@@ -66,6 +54,10 @@ object Game {
     }.get
   }
 
+  def updatePlayers(player: Player): Unit = {
+    players += (player.name -> player)
+  }
+
   def updateJail(player: Player): Unit = {
     anyoneInJail().foreach(freeThePlayer)
     putInJail(player)
@@ -79,9 +71,8 @@ object Game {
     updatePlayers(Player(player.name, player.inGameOrder, player.currentCell))
   }
 
-  private def putInJail(player: Player): Unit =
+  private def putInJail(player: Player): Unit = {
     updatePlayers(Player(player.name, player.inGameOrder, player.currentCell, canMove = false))
-
-  private def updatePlayers(player: Player): Unit = players += (player.name -> player)
+  }
 
 }

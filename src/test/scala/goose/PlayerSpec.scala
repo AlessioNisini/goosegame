@@ -6,6 +6,7 @@ import org.mockito.Mockito._
 class PlayerSpec extends WordSpecLike with Matchers with TestValues {
 
   import Game._
+  import UserInterface._
 
   "move" should {
     "change the player position forward between 2 and 12" in {
@@ -76,7 +77,7 @@ class PlayerSpec extends WordSpecLike with Matchers with TestValues {
       super.withFixture(test)
     }
     finally {
-      resetPlayers()
+      clearPlayers()
     }
   }
 

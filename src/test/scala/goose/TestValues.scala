@@ -2,7 +2,6 @@ package goose
 
 trait TestValues {
 
-  val initPlayerSize = 3
   val firstGooseCell = 0
   val lastPitCell = 3
   val aPlainCell = 4

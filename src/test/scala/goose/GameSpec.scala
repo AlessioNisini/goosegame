@@ -5,26 +5,7 @@ import org.scalatest.{Matchers, Outcome, WordSpecLike}
 class GameSpec extends WordSpecLike with Matchers with TestValues {
 
   import Game._
-
-  "add player" should {
-    "add player correctly" in {
-      addPlayer(testPlayer)
-      players.size shouldBe initPlayerSize + 1
-      players(testPlayer) shouldBe Player(testPlayer, initPlayerSize, START_CELL)
-    }
-    "do not add two player with the same name" in {
-      addPlayer(testPlayer)
-      addPlayer(testPlayer)
-      players.size shouldBe initPlayerSize + 1
-    }
-    "do not add two player with incorrect name" in {
-      addPlayer(invalidPlayer1)
-      addPlayer(invalidPlayer2)
-      addPlayer(invalidPlayer3)
-      addPlayer(invalidPlayer4)
-      players.size shouldBe initPlayerSize
-    }
-  }
+  import UserInterface._
 
   "first player" should {
     "return the first player of the game" in {
@@ -87,7 +68,7 @@ class GameSpec extends WordSpecLike with Matchers with TestValues {
       super.withFixture(test)
     }
     finally {
-      resetPlayers()
+      clearPlayers()
     }
   }
 
