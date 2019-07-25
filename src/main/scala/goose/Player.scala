@@ -66,7 +66,7 @@ case class Player(name: String, inGameOrder: Int, currentCell: Int, canMove: Boo
     Player(name, inGameOrder, currentCell, canMove = false)
   }
 
-  def hasWin: Boolean = this.currentCell == END_CELL
+  def hasWon: Boolean = this.currentCell == END_CELL
 
   def isInJail: Boolean = !this.canMove
 

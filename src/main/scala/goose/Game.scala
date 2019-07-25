@@ -25,7 +25,7 @@ object Game {
   def loop(currentPlayer: Player): Player = {
     println()
     val playerAfterHisRound = playOneRound(currentPlayer)
-    if(playerAfterHisRound.hasWin) playerAfterHisRound
+    if(playerAfterHisRound.hasWon) playerAfterHisRound
     else loop(nextPlayer(playerAfterHisRound))
   }
 
