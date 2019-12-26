@@ -10,7 +10,7 @@ object Game {
 
   val REGEX = "^[a-zA-Z0-9]+$"
 
-  val START_CELL = 0
+  val START_CELL = 44
   val END_CELL = 63
   val SKULL_CELL = 58
   val JAIL_CELL = 37
